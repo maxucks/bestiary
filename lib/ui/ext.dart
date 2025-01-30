@@ -1,3 +1,4 @@
+import 'package:bestiary/deps_provider_.dart';
 import 'package:bestiary/ui/theme/provider.dart';
 import 'package:bestiary/ui/theme/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -15,4 +16,6 @@ extension ColorExtension on Color {
 
 extension ContextExtension on BuildContext {
   AppTheme get theme => ThemeProvider.of(this).theme;
+  Dependencies get deps => DependencyProvider.of(this).deps;
+  NavigatorState get navigator => Navigator.of(this);
 }

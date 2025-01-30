@@ -5,23 +5,27 @@ enum Status {
   done,
 }
 
-class AppState<T> {
+class BlocState<T> {
   final T? value;
   final String? error;
   final Status status;
 
-  AppState.idle()
+  BlocState.idle()
       : value = null,
         error = null,
         status = Status.idle;
 
-  AppState.pending({this.value})
+  BlocState.pending({this.value})
       : error = null,
         status = Status.pending;
 
-  AppState.error(this.error, {this.value}) : status = Status.error;
+  BlocState.error(this.error, {this.value}) : status = Status.error;
 
-  AppState.done(this.value)
+  BlocState.done(this.value)
       : error = null,
         status = Status.done;
+
+  get pending => status == Status.pending;
+  get hasError => status == Status.error;
+  get done => status == Status.done;
 }

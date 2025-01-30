@@ -1,3 +1,3 @@
 class PipeEvent {}
 
-class BooksCachedPipeEvent extends PipeEvent {}
+class CreatureFetchedPipeEvent extends PipeEvent {}

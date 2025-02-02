@@ -7,7 +7,7 @@ import 'package:bestiary/modules/blocs/state.dart';
 import 'package:bestiary/ui/ext.dart';
 import 'package:bestiary/ui/painters/constrained_text_painter.dart';
 import 'package:bestiary/ui/widgets/parallax_image.dart';
-import 'package:bestiary/ui/widgets/samurai_scaffold.dart';
+import 'package:bestiary/ui/widgets/boku_no_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -122,7 +122,7 @@ class _CreatureScreenState extends State<CreatureScreen> with TickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    return SamuraiScaffold(
+    return BokuNoScaffold(
       body: RefreshIndicator(
         onRefresh: _fetchCreature,
         child: BlocBuilder<CreatureBloc, BlocState<Creature>>(

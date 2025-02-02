@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SamuraiScaffold extends StatelessWidget {
-  const SamuraiScaffold({
+class BokuNoScaffold extends StatelessWidget {
+  const BokuNoScaffold({
     super.key,
     required this.body,
   });

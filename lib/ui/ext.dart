@@ -12,7 +12,7 @@ extension ColorExtension on Color {
   static const _mute = 180;
 
   Color get muted => withBlue(b.toInt() + _mute).withGreen(g.toInt() + _mute).withRed(r.toInt() + _mute);
-  Color get opaque => withAlpha(100);
+  Color get opaque => withAlpha(150);
 }
 
 extension ContextExtension on BuildContext {

@@ -1,34 +1,71 @@
-import 'package:bestiary/models/books.dart';
 import 'package:bestiary/ports/adapters.dart';
 
 class FakeHttpAdapter implements HttpAdapter {
   final _fakeResponses = {
-    '/books': <Map<String, dynamic>>[
-      const BookModel(
-        id: 1,
-        title: 'Book #1',
-        description: 'Anim ut aliqua labore cupidatat reprehenderit ipsum deserunt',
-      ).toJson(),
-      const BookModel(
-        id: 2,
-        title: 'Book #2',
-        description: 'Dolor consequat aute ex proident',
-      ).toJson(),
-      const BookModel(
-        id: 3,
-        title: 'Book #3',
-        description: 'Nulla voluptate ea eu cillum sunt sint duis velit fugiat ea qui sunt non',
-      ).toJson(),
-      const BookModel(
-        id: 4,
-        title: 'Book #4',
-        description: 'Esse pariatur dolore commodo dolor anim id in duis Lorem mollit nostrud quis',
-      ).toJson(),
+    '/papers': [
+      {
+        "id": 0,
+        "title": "Ёкай",
+        "image_url": "",
+      },
+      {
+        "id": 1,
+        "title": "Каса-обакэ",
+        "image_url": "",
+      },
+      {
+        "id": 2,
+        "title": "Они",
+        "image_url": "",
+      },
+      {
+        "id": 3,
+        "title": "Китсунэ",
+        "image_url": "",
+      },
+      {
+        "id": 4,
+        "title": "Рукорокуби",
+        "image_url": "",
+      },
+      {
+        "id": 5,
+        "title": "Футакуччи-онна",
+        "image_url": "",
+      },
+      {
+        "id": 6,
+        "title": "Они 2",
+        "image_url": "",
+      },
+      {
+        "id": 7,
+        "title": "Каса-бабаки",
+        "image_url": "",
+      },
     ],
+    '/paper': {
+      "id": 1,
+      "title": "Каса-обакэ",
+      "original_title": "からかさ小僧",
+      "description":
+          "Один из самых известных и популярных видов цукумогами. Как и большинство других цукумогами, каса-обаке появился на свет, скорее всего, в эпоху Эдо благодаря художникам-иллюстраторам, потому что японский народный фольклор не знает никаких сказок, легенд или быличек про это существо. Зато картинок, иллюстраций, манга и аниме с участием каса-обакэ просто не перечесть. Причиной тому — добродушный характер каракаса-обакэ и его запоминающийся облик: подпрыгивающий на одной ноге старый бумажный зонтик с одним глазом и длинным высунутым языком. Это классический облик, придуманный Сигэру Мидзуки. До него облик каса-обакэ был более вариативен — иногда добавлялись две руки, или говорили о его двух глазах, двух ногах.\n\nКак говорится в одной сказке, в большом старом особняке провели тщательную уборку и выкинули множество утвари, которая показалась старой или слишком обычной. Эти предметы, к которым относились посуда, кухонная туварь и даже старая мебель, собрались вместе и составили план по запугиванию обитателей особняка, за то, что те пренебрегли ими.\n\nТакие ожившие предметы выступают в качестве параллели с западным полтергейстом. Их легко обидеть, и, если хозяева будут не достаточно заботиться, то цукумогами могут что-нибудь разбить или сломать",
+      "image_url": "",
+      "category": {
+        "id": 3,
+        "name": "Цукумогами",
+        "slug": ["Япония", "Мифы", "Существа", "Ёкаи", "Бакэмоно", "Цукумогами"],
+      },
+      "notes": [
+        "Один из самых известных и популярных видов цукумогами",
+        "Картинок, иллюстраций, манга и аниме с участием каса-обакэ просто не перечесть",
+      ],
+    },
   };
 
   @override
   Future<dynamic> get(String path, {Map<String, dynamic>? queryParameters}) async {
+    await Future.delayed(const Duration(seconds: 1));
     return _fakeResponses[path];
   }
 }

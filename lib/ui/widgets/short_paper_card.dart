@@ -1,17 +1,17 @@
-import 'package:bestiary/models/creature.dart';
+import 'package:bestiary/models/short_paper.dart';
 import 'package:bestiary/ui/ext.dart';
 import 'package:bestiary/ui/widgets/boku_no_frozen_galss.dart';
 import 'package:flutter/material.dart';
 
-class CreatureCard extends StatelessWidget {
-  const CreatureCard({
+class ShortPaperCard extends StatelessWidget {
+  const ShortPaperCard({
     super.key,
-    required this.creature,
+    required this.paper,
     this.aspectRatio = 0.8,
     this.onTap,
   });
 
-  final ListCreature creature;
+  final ShortPaper paper;
   final double aspectRatio;
   final Function()? onTap;
 
@@ -40,7 +40,7 @@ class CreatureCard extends StatelessWidget {
             right: 12,
             child: BokuNoFrozenGalss(
               child: Text(
-                creature.name.local,
+                paper.title,
                 textAlign: TextAlign.center,
                 style: context.theme.font.subtitle.copyWith(
                   color: context.theme.color.fg.cover.active,

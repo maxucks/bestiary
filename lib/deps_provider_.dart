@@ -1,25 +1,27 @@
 import 'package:bestiary/modules/adapters/event_pipe.dart';
-import 'package:bestiary/modules/blocs/creature_bloc.dart';
+import 'package:bestiary/modules/blocs/paper_bloc.dart';
+import 'package:bestiary/modules/blocs/papers_bloc.dart';
+import 'package:bestiary/ports/adapters.dart';
+import 'package:bestiary/ports/repositories.dart';
 import 'package:flutter/material.dart';
 
 class Dependencies {
   Dependencies({
     required this.pipe,
-    // required this.cacheClient,
-    // required this.httpClient,
-    // required this.booksRepository,
-    // required this.cacheBooksRepository,
-    required this.creatureBloc,
-    // required this.notificationsBloc,
+    required this.httpClient,
+    required this.papersRepository,
+    required this.paperBloc,
+    required this.papersBloc,
   });
 
   final EventPipe pipe;
-  // final CacheAdapter cacheClient;
-  // final HttpAdapter httpClient;
-  // final BooksRepository booksRepository;
-  // final CacheBooksRepository cacheBooksRepository;
-  final CreatureBloc creatureBloc;
-  // final NotificationsBloc notificationsBloc;
+
+  final HttpAdapter httpClient;
+
+  final PapersRepository papersRepository;
+
+  final PaperBloc paperBloc;
+  final PapersBloc papersBloc;
 }
 
 class DependencyProvider extends InheritedWidget {

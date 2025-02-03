@@ -5,23 +5,23 @@ enum Status {
   done,
 }
 
-class BlocState<T> {
+class BokuNoState<T> {
   final T? value;
   final String? error;
   final Status status;
 
-  BlocState.idle()
+  BokuNoState.idle()
       : value = null,
         error = null,
         status = Status.idle;
 
-  BlocState.pending({this.value})
+  BokuNoState.pending({this.value})
       : error = null,
         status = Status.pending;
 
-  BlocState.error(this.error, {this.value}) : status = Status.error;
+  BokuNoState.error(this.error, {this.value}) : status = Status.error;
 
-  BlocState.done(this.value)
+  BokuNoState.done(this.value)
       : error = null,
         status = Status.done;
 

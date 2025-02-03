@@ -36,5 +36,6 @@ abstract interface class AccentPalette {
 }
 
 abstract interface class EffectsPalette {
+  Color get frozenGlassColor;
   List<BoxShadow> get shadow;
 }

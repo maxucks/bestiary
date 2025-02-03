@@ -1,10 +1,10 @@
 import 'package:bestiary/ports/adapters.dart';
 
-class SimpleCache implements CacheAdapter {
+class BussinCache implements CacheAdapter {
   final Map<String, dynamic> _cache = {};
   final int cacheTime;
 
-  SimpleCache({required this.cacheTime});
+  BussinCache({required this.cacheTime});
 
   @override
   Future<T> get<T>(String key) async {

@@ -11,17 +11,19 @@ class BokuNoFrozenGalss extends StatelessWidget {
 
   final Widget child;
 
+  static const double _blur = 3.0;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       clipBehavior: Clip.hardEdge,
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
-        color: context.theme.color.bg.cover.primary.opaque,
+        color: context.theme.color.effect.frozenGlassColor,
       ),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+        filter: ImageFilter.blur(sigmaX: _blur, sigmaY: _blur),
         child: child,
       ),
     );

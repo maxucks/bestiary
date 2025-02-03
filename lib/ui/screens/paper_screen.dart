@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:bestiary/events/pipe_event.dart';
-import 'package:bestiary/models/creature.dart';
-import 'package:bestiary/modules/blocs/creature_bloc.dart';
+import 'package:bestiary/models/paper.dart';
+import 'package:bestiary/modules/blocs/paper_bloc.dart';
 import 'package:bestiary/modules/blocs/state.dart';
 import 'package:bestiary/ui/ext.dart';
 import 'package:bestiary/ui/painters/constrained_text_painter.dart';
@@ -11,18 +11,18 @@ import 'package:bestiary/ui/widgets/boku_no_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CreatureScreen extends StatefulWidget {
-  const CreatureScreen({
+class PaperScreen extends StatefulWidget {
+  const PaperScreen({
     super.key,
   });
 
   static const _borderRadius = Radius.circular(50);
 
   @override
-  State<CreatureScreen> createState() => _CreatureScreenState();
+  State<PaperScreen> createState() => _PaperScreenState();
 }
 
-class _CreatureScreenState extends State<CreatureScreen> with TickerProviderStateMixin {
+class _PaperScreenState extends State<PaperScreen> with TickerProviderStateMixin {
   bool _controlsHidden = false;
 
   late final ScrollController _scrollController;
@@ -78,7 +78,7 @@ class _CreatureScreenState extends State<CreatureScreen> with TickerProviderStat
 
     _pipeSub = context.deps.pipe.stream().listen(_onPipeEvent);
 
-    _fetchCreature();
+    _fetchPaper();
   }
 
   @override
@@ -90,7 +90,7 @@ class _CreatureScreenState extends State<CreatureScreen> with TickerProviderStat
   }
 
   void _onPipeEvent(PipeEvent event) {
-    if (event is CreatureFetchedPipeEvent) {
+    if (event is PaperFetchedPipeEvent) {
       _contentAnimationController.reset();
       _contentAnimationController.forward();
 
@@ -116,7 +116,7 @@ class _CreatureScreenState extends State<CreatureScreen> with TickerProviderStat
     }
   }
 
-  Future<void> _fetchCreature() async => context.deps.creatureBloc.add(FetchCreatureEvent());
+  Future<void> _fetchPaper() async => context.deps.paperBloc.add(FetchPaperEvent(0));
 
   Future<void> _onTapBack() async => context.navigator.pop();
 
@@ -124,9 +124,10 @@ class _CreatureScreenState extends State<CreatureScreen> with TickerProviderStat
   Widget build(BuildContext context) {
     return BokuNoScaffold(
       body: RefreshIndicator(
-        onRefresh: _fetchCreature,
-        child: BlocBuilder<CreatureBloc, BlocState<Creature>>(
+        onRefresh: _fetchPaper,
+        child: BlocBuilder<PaperBloc, BokuNoState<Paper>>(
           builder: (context, state) {
+            debugPrint('${state.value}');
             if (state.pending) {
               return Center(
                 child: const CircularProgressIndicator(color: Color(0xFFEFC261)),
@@ -134,14 +135,28 @@ class _CreatureScreenState extends State<CreatureScreen> with TickerProviderStat
             }
 
             if (state.hasError) {
-              return Text(state.error!);
+              return Center(
+                child: Text(
+                  state.error!,
+                  style: context.theme.font.subtitle.copyWith(
+                    color: context.theme.color.fg.cover.active,
+                  ),
+                ),
+              );
             }
 
             if (!state.done) {
-              return const Text("Idle");
+              return Center(
+                child: Text(
+                  "Idle",
+                  style: context.theme.font.subtitle.copyWith(
+                    color: context.theme.color.fg.cover.active,
+                  ),
+                ),
+              );
             }
 
-            final creature = state.value!;
+            final paper = state.value!;
 
             return Stack(
               children: [
@@ -168,13 +183,12 @@ class _CreatureScreenState extends State<CreatureScreen> with TickerProviderStat
                     child: Column(
                       children: [
                         SizedBox(height: MediaQuery.of(context).size.height / 1.5 - 50),
-                        // TODO: remove
                         Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
-                              topLeft: CreatureScreen._borderRadius,
-                              topRight: CreatureScreen._borderRadius,
+                              topLeft: PaperScreen._borderRadius,
+                              topRight: PaperScreen._borderRadius,
                             ),
                             boxShadow: context.theme.color.effect.shadow,
                             color: context.theme.color.bg.primary,
@@ -183,9 +197,9 @@ class _CreatureScreenState extends State<CreatureScreen> with TickerProviderStat
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               const SizedBox(height: 50),
-                              _NameSection(name: creature.name),
+                              _NameSection(title: paper.title, originalTitle: paper.originalTitle),
                               const SizedBox(height: 30),
-                              _DescriptionSection(description: creature.description),
+                              _DescriptionSection(description: paper.description),
                               const SizedBox(height: 100),
                             ],
                           ),
@@ -237,10 +251,12 @@ class _CreatureScreenState extends State<CreatureScreen> with TickerProviderStat
 
 class _NameSection extends StatelessWidget {
   const _NameSection({
-    required this.name,
+    required this.title,
+    this.originalTitle,
   });
 
-  final Name name;
+  final String title;
+  final String? originalTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -248,13 +264,13 @@ class _NameSection extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          name.local,
+          title,
           style: context.theme.font.header.copyWith(color: context.theme.color.fg.body),
         ),
-        name.original == null
+        originalTitle == null
             ? SizedBox.shrink()
             : Text(
-                name.original!,
+                originalTitle!,
                 style: context.theme.font.subtitle.copyWith(
                   color: context.theme.color.fg.body.muted,
                 ),

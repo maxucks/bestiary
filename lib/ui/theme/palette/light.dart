@@ -55,7 +55,7 @@ class LightAccentPalette implements AccentPalette {
 
 class LightEffectsPalette implements EffectsPalette {
   @override
-  Color get frozenGlassColor => Color.fromARGB(121, 35, 16, 16);
+  Color get frozenGlassColor => Color.fromARGB(121, 33, 18, 18);
 
   @override
   final shadow = [

@@ -1,3 +1,4 @@
+import 'package:bestiary/ui/ext.dart';
 import 'package:flutter/material.dart';
 
 class BokuNoScaffold extends StatelessWidget {
@@ -11,7 +12,7 @@ class BokuNoScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF292423),
+      backgroundColor: context.theme.color.bg.cover.primary,
       body: body,
     );
   }

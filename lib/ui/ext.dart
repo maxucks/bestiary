@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bestiary/deps_provider_.dart';
 import 'package:bestiary/ui/theme/provider.dart';
 import 'package:bestiary/ui/theme/app_theme.dart';
@@ -19,4 +21,8 @@ extension ContextExtension on BuildContext {
   AppTheme get theme => ThemeProvider.of(this).theme;
   Dependencies get deps => DependencyProvider.of(this).deps;
   NavigatorState get navigator => Navigator.of(this);
+}
+
+extension ListExtension<T> on List<T> {
+  T get random => this[Random().nextInt(length)];
 }

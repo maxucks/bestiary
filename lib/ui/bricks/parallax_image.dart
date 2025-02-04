@@ -5,25 +5,26 @@ class ParallaxImage extends StatelessWidget {
   const ParallaxImage({
     super.key,
     required this.scrollPosition,
+    required this.imageUrl,
   });
 
   final ScrollPosition? scrollPosition;
+  final String imageUrl;
 
   @override
   Widget build(BuildContext context) {
-    final image = Image.asset("assets/images/oni.png", fit: BoxFit.cover);
+    Widget image = Image.asset(imageUrl, fit: BoxFit.cover);
 
-    return AspectRatio(
-      aspectRatio: 4 / 6,
-      child: scrollPosition != null
-          ? Flow(
-              delegate: _ParallaxFlowDelegate(scrollPosition: scrollPosition!),
-              children: [
-                image,
-              ],
-            )
-          : image,
-    );
+    if (scrollPosition != null) {
+      image = Flow(
+        delegate: _ParallaxFlowDelegate(scrollPosition: scrollPosition!),
+        children: [
+          image,
+        ],
+      );
+    }
+
+    return AspectRatio(aspectRatio: 4 / 6, child: image);
   }
 }
 
@@ -36,9 +37,7 @@ class _ParallaxFlowDelegate extends FlowDelegate {
 
   @override
   BoxConstraints getConstraintsForChild(int i, BoxConstraints constraints) {
-    return BoxConstraints.tightFor(
-      width: constraints.maxWidth,
-    );
+    return BoxConstraints.tightFor(width: constraints.maxWidth, height: constraints.maxHeight);
   }
 
   @override

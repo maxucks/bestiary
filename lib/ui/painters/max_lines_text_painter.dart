@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ConstrainedTextPainter extends CustomPainter {
-  ConstrainedTextPainter({
+class MaxLinesTextPainter extends CustomPainter {
+  MaxLinesTextPainter({
     required this.text,
     required this.style,
     this.maxLines = 4,

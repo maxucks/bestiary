@@ -4,7 +4,7 @@ import 'package:bestiary/modules/adapters/fake_http.dart';
 import 'package:bestiary/modules/blocs/paper_bloc.dart';
 import 'package:bestiary/modules/blocs/papers_bloc.dart';
 import 'package:bestiary/modules/repositories/rest_papers_repository.dart';
-import 'package:bestiary/ui/screens/paper_screen.dart';
+import 'package:bestiary/ui/screens/paper_screen/paper_screen.dart';
 import 'package:bestiary/ui/screens/home_screen.dart';
 import 'package:bestiary/ui/theme/app_theme.dart';
 import 'package:bestiary/ui/theme/provider.dart';
@@ -20,7 +20,7 @@ void main() {
 
   final pipe = EventPipe();
 
-  final papersBloc = PapersBloc(papersRepo, pipe);
+  final papersBloc = PapersBloc(papersRepo);
   final paperBloc = PaperBloc(papersRepo, pipe);
 
   runApp(ThemeProvider(

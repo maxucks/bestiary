@@ -1,8 +1,8 @@
 import 'package:bestiary/ui/ext.dart';
 import 'package:flutter/material.dart';
 
-class BokuNoInput extends StatelessWidget {
-  const BokuNoInput({
+class TextInput extends StatelessWidget {
+  const TextInput({
     super.key,
     required this.placeholder,
     this.controller,

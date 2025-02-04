@@ -1,5 +1,6 @@
 import 'package:bestiary/events/pipe_event.dart';
 import 'package:bestiary/models/paper.dart';
+import 'package:bestiary/events/bloc_events.dart';
 import 'package:bestiary/modules/blocs/state.dart';
 import 'package:bestiary/ports/adapters.dart';
 import 'package:bestiary/ports/repositories.dart';
@@ -7,17 +8,10 @@ import 'package:bloc/bloc.dart';
 
 typedef _State = BokuNoState<Paper>;
 
-abstract class PaperEvent {}
-
-class FetchPaperEvent extends PaperEvent {
-  final int id;
-
-  FetchPaperEvent(this.id);
-}
-
 class PaperBloc extends Bloc<PaperEvent, _State> {
-  PaperBloc(this._papersRepo, this._pipe) : super(BokuNoState.idle()) {
+  PaperBloc(this._papersRepo, this._pipe) : super(BokuNoState.init()) {
     on<FetchPaperEvent>(_fetchPaper);
+    on<RefreshPaperEvent>(_refreshPaper);
   }
 
   final PapersRepository _papersRepo;
@@ -25,15 +19,29 @@ class PaperBloc extends Bloc<PaperEvent, _State> {
 
   Future<void> _fetchPaper(FetchPaperEvent event, Emitter<_State> emit) async {
     try {
-      emit(BokuNoState.pending(value: state.value));
+      emit(state.pending());
 
       final paper = await _papersRepo.getPaper(event.id);
 
-      emit(BokuNoState.done(paper));
+      emit(state.done(paper));
 
-      _pipe.publish(PaperFetchedPipeEvent(paper.id));
+      _pipe.publish(PaperReadyPipeEvent(paper.id));
     } catch (e) {
-      emit(BokuNoState.error(e.toString()));
+      emit(state.error(e.toString()));
+    }
+  }
+
+  Future<void> _refreshPaper(RefreshPaperEvent event, Emitter<_State> emit) async {
+    try {
+      emit(state.refreshing());
+
+      final paper = await _papersRepo.getPaper(event.id);
+
+      emit(state.done(paper));
+
+      _pipe.publish(PaperReadyPipeEvent(paper.id));
+    } catch (e) {
+      emit(state.error(e.toString()));
     }
   }
 }
